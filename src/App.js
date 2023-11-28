@@ -1,13 +1,17 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import Form from './components/Form';
-import ToDoList from './components/ToDoList';
+import ToDoCard from './components/ToDoCard';
 
 function App() {
   const [inputText, setInputText] = useState('');
+  const [description, setDescription] = useState("");
+  const [dueDate, setDueDate] = useState("");
   const [todoItems, setTodoItems] = useState([]);
+  const [priority, setPriority] = useState("low");
   const [status, setStatus] = useState('all');
   const [filteredData, setFilteredData] = useState([]);
+  const [editingId, setEditingId] = useState(null);
 
   const filteredHandler = () => {
     switch (status) {
@@ -31,11 +35,24 @@ function App() {
   return (
     <div className="App">
       <header>
-        <h1>Manasi's TO DO List</h1>
+        <h2>Welcome!! Here is your Task Manager</h2>
       </header>
       <Form setInputText={setInputText} inputText={inputText} setTodoItems={setTodoItems} todoItems={todoItems}
-            setStatus={setStatus} />
-      <ToDoList todoItems={todoItems} setTodoItems={setTodoItems} filteredData={filteredData} />
+            setStatus={setStatus} description={description} setDescription={setDescription} setDueDate={setDueDate}
+            dueDate={dueDate} priority={priority} setPriority={setPriority} editingId={editingId} setEditingId={setEditingId} />
+      <div className='cards-container'>
+        <ToDoCard heading={"Upcoming Tasks"} todoItems={todoItems} setTodoItems={setTodoItems} filteredData={filteredData} onTaskEdit={setInputText}
+        setDescription={setDescription} setDueDate={setDueDate} setPriority={setPriority} setEditingId={setEditingId}/>
+        <ToDoCard heading={"Overdue Tasks"} todoItems={todoItems} setTodoItems={setTodoItems} filteredData={filteredData.filter(data => {
+          const today = new Date();
+          const due = new Date(data.dueDate);
+          return ( today < due)
+        })} onTaskEdit={setInputText}
+        setDescription={setDescription} setDueDate={setDueDate} setPriority={setPriority} setEditingId={setEditingId}
+        />
+        <ToDoCard heading={"Completed Tasks"} todoItems={todoItems} setTodoItems={setTodoItems} filteredData={filteredData.filter(data => data.completed)} onTaskEdit={setInputText}
+        setDescription={setDescription} setDueDate={setDueDate} setPriority={setPriority} setEditingId={setEditingId}/>
+      </div>
     </div>
   );
 }

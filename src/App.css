@@ -6,8 +6,8 @@
 body {
   background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
   color: white;
-  font-family: "Poppins", sans-serif;
   min-height: 100vh;
+  margin: 10px;
 }
 header {
   font-size: 2rem;
@@ -20,12 +20,12 @@ form {
   justify-content: center;
   align-items: center;
 }
-form input,
+.todo-input,
 form button {
   padding: 0.5rem;
-  font-size: 2rem;
   border: none;
   background: white;
+  margin: 0.5rem;
 }
 form button {
   color: #ff6f47;
@@ -37,10 +37,16 @@ form button:hover {
   background: #ff6f47;
   color: white;
 }
-.todo-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+form button:disabled {
+  color: #ff6f47;
+  background: #f7fffe;
+  opacity: 0.3;
+}
+form button:disabled:hover {
+  background-color: #ff6f47;
+  color: white;
+  opacity: 0.3;
+  cursor: not-allowed;
 }
 
 .todo-list {
@@ -57,22 +63,58 @@ form button:hover {
   justify-content: space-between;
   align-items: center;
   transition: all 1s ease;
+  /* border: 1px solid black; */
+  padding: 2px;
+  border-radius: 5px;
 }
+
+.to-do-table {
+  text-align: center;
+  border-collapse: collapse;
+  font-size: 1rem;
+}
+
+.table-head th {
+  min-width: 100px;
+  font-weight: 500;
+  padding: 5px;
+}
+
+.table-body tr, .table-head tr {
+  border: 1px solid black;
+}
+.table-body td {
+  font-size: 1rem;
+  padding: 5px;
+}
+
+.priority {
+  border: 1px solid black;
+}
+
 .filter-todo {
-  padding: 1rem;
+  padding: 0.5rem;
 }
 .todo li {
   flex: 1;
 }
 
 .trash-btn,
-.complete-btn {
-  background: #ff6f47;
+.complete-btn,
+.edit-btn {
   color: white;
   border: none;
-  padding: 1rem;
+  padding: 0.5rem;
   cursor: pointer;
   font-size: 1rem;
+}
+
+.trash-btn {
+  background: #ff6f47;
+}
+
+.edit-btn {
+  background-color: #f6d365;
 }
 .complete-btn {
   background: rgb(11, 212, 162);
@@ -114,7 +156,7 @@ select {
   position: relative;
   overflow: hidden;
 }
-select {
+.filter-todo {
   color: #ff6f47;
   font-family: "Poppins", sans-serif;
   cursor: pointer;
@@ -126,8 +168,28 @@ select {
   position: absolute;
   top: 0;
   right: 0;
-  padding: 1rem;
+  padding: 0.5rem;
   background: #ff6f47;
   cursor: pointer;
   pointer-events: none;
+}
+
+.cards-container {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.card {
+  background-color: #f7fffe;
+  padding: 1rem;
+  border-radius: 8px;
+  .heading {
+    color: #3b3939;
+    text-align: center;
+  }
+}
+
+.priority {
+  padding: 0.5rem;
 }
