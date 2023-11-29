@@ -11,21 +11,36 @@ const Form = ({
   priority,
   setPriority,
   editingId,
-  setEditingId
+  setEditingId,
 }) => {
   const submitHandler = (e) => {
     e.preventDefault();
-    setTodoItems([
-      ...todoItems,
-      {
-        text: inputText,
-        completed: false,
-        id: Math.random() * 10,
-        priority,
-        description,
-        dueDate,
-      },
-    ]);
+    if (editingId) {
+      setTodoItems([
+        ...todoItems.filter((data) => data.id !== editingId),
+        {
+          text: inputText,
+          completed: false,
+          id: editingId,
+          priority,
+          description,
+          dueDate,
+        },
+      ]);
+      setEditingId(null);
+    } else {
+      setTodoItems([
+        ...todoItems,
+        {
+          text: inputText,
+          completed: false,
+          id: Math.random() * 10,
+          priority,
+          description,
+          dueDate,
+        },
+      ]);
+    }
     setInputText("");
     setDescription("");
     setDueDate("");
@@ -73,7 +88,11 @@ const Form = ({
         onClick={submitHandler}
         disabled={!(inputText && description && dueDate)}
       >
-        {!editingId ? <i className="fas fa-plus-square"></i> : <i className="fas fa-pen"></i>}
+        {!editingId ? (
+          <i className="fas fa-plus-square"></i>
+        ) : (
+          <i className="fas fa-pen"></i>
+        )}
       </button>
       <div className="select">
         <select onChange={statusHandler} name="todos" className="filter-todo">

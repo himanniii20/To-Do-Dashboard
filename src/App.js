@@ -41,12 +41,14 @@ function App() {
             setStatus={setStatus} description={description} setDescription={setDescription} setDueDate={setDueDate}
             dueDate={dueDate} priority={priority} setPriority={setPriority} editingId={editingId} setEditingId={setEditingId} />
       <div className='cards-container'>
-        <ToDoCard heading={"Upcoming Tasks"} todoItems={todoItems} setTodoItems={setTodoItems} filteredData={filteredData} onTaskEdit={setInputText}
+        <ToDoCard heading={"Upcoming Tasks"} todoItems={todoItems} setTodoItems={setTodoItems} filteredData={filteredData.filter(data => {
+          return (new Date() < new Date(data.dueDate)) && !data.completed;
+        })} onTaskEdit={setInputText}
         setDescription={setDescription} setDueDate={setDueDate} setPriority={setPriority} setEditingId={setEditingId}/>
         <ToDoCard heading={"Overdue Tasks"} todoItems={todoItems} setTodoItems={setTodoItems} filteredData={filteredData.filter(data => {
           const today = new Date();
           const due = new Date(data.dueDate);
-          return ( today < due)
+          return ( today > due) && !data.completed
         })} onTaskEdit={setInputText}
         setDescription={setDescription} setDueDate={setDueDate} setPriority={setPriority} setEditingId={setEditingId}
         />
